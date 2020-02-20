@@ -16,7 +16,7 @@ class Corntab(object):
         self.db = SqLiteDb(db_name)
         self.inc = inc
         self.timer = BackgroundScheduler(timezone='Asia/Shanghai')
-        self.timer.add_job(self.check_track, 'interval', id="Corntab_Check", seconds=self.inc)
+        self.timer.add_job(self.check_track, 'interval', id="Corntab_Check", seconds=self.inc, coalesce=True, misfire_grace_time=self.inc-20)
 
     def check_track(self):
         os.system("echo $(date '+%m/%d/%Y %H:%M:%S') 'Corntab Running' >> corntab.log")
